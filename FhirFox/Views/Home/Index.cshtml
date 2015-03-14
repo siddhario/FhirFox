@@ -1,0 +1,25 @@
+﻿<h2>Patients</h2>
+<div ng-app="patientApp" ng-controller="PatientController">
+    <table class="table table-responsive table-hover">        
+        <thead>
+            <tr>
+                <th>Search:<input type="text" ng-model="search" /></th>
+            </tr>
+            <tr>
+                <th>ID</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Address</th>
+                <th>City</th>
+            </tr>
+        </thead>
+        <tr ng-repeat="patient in patients | filter:search">
+            <td>{{patient.resource.id}}</td>
+            <td>{{patient.resource.name[0].given[0]}}</td>
+            <td>{{patient.resource.name[0].family[0]}}</td>
+            <td>{{patient.resource.address[0].line[0]}}</td>
+            <td>{{patient.resource.address[0].city}}</td>
+        </tr>
+    </table>
+</div>
+
