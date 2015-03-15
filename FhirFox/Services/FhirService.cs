@@ -2,6 +2,7 @@
 using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -46,19 +47,15 @@ namespace FhirFox.Services
 
         public async Task<Base> GetAll(string type)
         {
-            return await Task.Factory.StartNew<Base>(() =>
-               {
-                   Bundle b = new Bundle();
-                   foreach (DBPatient p in _dbContext.Patients)
-                   {
-                       Bundle.BundleEntryComponent be = new Bundle.BundleEntryComponent();
-                       be.Resource = (Resource)_modelConvertor.GetFhirObject(p);                    
-                       b.Entry.Add(be);
-                   }
-                   return b;
-               }
-           );
-
+            Bundle b = new Bundle();
+            List<object> list = await _dbContext.Set(Type.GetType("FhirFox.Models.DB" + type)).ToListAsync();
+            foreach (var p in list)
+            {
+                Bundle.BundleEntryComponent be = new Bundle.BundleEntryComponent();
+                be.Resource = (Resource)_modelConvertor.GetFhirObject(p);
+                b.Entry.Add(be);
+            }
+            return b;
         }
 
         public async Task Add(Base resource)
