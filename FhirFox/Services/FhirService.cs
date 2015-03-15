@@ -49,15 +49,12 @@ namespace FhirFox.Services
             return await Task.Factory.StartNew<Base>(() =>
                {
                    Bundle b = new Bundle();
-
                    foreach (DBPatient p in _dbContext.Patients)
                    {
-
                        Bundle.BundleEntryComponent be = new Bundle.BundleEntryComponent();
-                       be.Resource = (Resource)_modelConvertor.GetFhirObject(p);
+                       be.Resource = (Resource)_modelConvertor.GetFhirObject(p);                    
                        b.Entry.Add(be);
                    }
-
                    return b;
                }
            );
