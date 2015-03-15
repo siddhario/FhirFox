@@ -1,37 +1,70 @@
-﻿<h2>Patients</h2>
+﻿
 <div ng-app="patientApp" ng-controller="PatientController">
+    <h2>Patients</h2>
+    Search:<input type="text" ng-model="search" />
     <table class="table table-responsive table-hover">
         <thead>
+            
             <tr>
-                <th>Search:<input type="text" ng-model="search" /></th>
-            </tr>
-            <tr>
-                <th>ID</th>
-                <th>First name</th>
-                <th>Last name</th>
-                <th>Address</th>
-                <th>City</th>
+                <th><a href="" ng-click="predicate = 'Id'; reverse=false">Id</a></th>
+                <th><a href="" ng-click="predicate = 'FirstName'; reverse=!reverse">First name</a></th>
+                <th><a href="" ng-click="predicate = 'LastName'; reverse=!reverse">Last name</a></th>
+                <th><a href="" ng-click="predicate = 'Address'; reverse=!reverse">Address</a></th>
+                <th><a href="" ng-click="predicate = 'City'; reverse=!reverse">City</a></th>
+                <th>Modify</th>
+                <th>Remove</th>
             </tr>
         </thead>
-        <tr ng-repeat="patient in patients | filter:search">
+        <tr ng-repeat="patient in patients | filter: search | orderBy:predicate:reverse | startFrom:currentPage*pageSize | limitTo:pageSize" ng-click="select(patient.resource)">
             <td>{{patient.resource.id}}</td>
             <td>{{patient.resource.name[0].given[0]}}</td>
             <td>{{patient.resource.name[0].family[0]}}</td>
             <td>{{patient.resource.address[0].line[0]}}</td>
             <td>{{patient.resource.address[0].city}}</td>
+            <td>
+                <div class="control-group">
+                    <div class="controls">
+                        <button id="modify" name="modify" ng-click="modify(patient.resource)" class="btn btn-primary">Modify</button>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="control-group">
+                    <div class="controls">
+                        <button id="remove" name="remove" ng-click="remove(patient.resource)" class="btn btn-danger">Remove</button>
+                    </div>
+                </div>
+            </td>
         </tr>
     </table>
 
-    <form class="form-horizontal" ng-submit="submit()" ng-controller="PatientController">
+    <div data-pagination="" data-num-pages="2"
+         data-current-page="0" data-max-size="7"
+         data-boundary-links="true"></div>
+
+    <ul class="pager">
+        <li ><a href="#" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">Previous</a></li>
+       
+               
+       
+        <li><a href="#" ng-disabled="currentPage >= patients.length/pageSize - 1" ng-click="currentPage=currentPage+1">Next</a></li>
+    </ul>
+
+    
+    <form class="form-horizontal" ng-submit="submit()" >
         <fieldset>
 
+            <div class="controls">
+                <button id="add" name="add" ng-click="add()" class="btn btn-success">New patient</button>
+            </div>
+
             <!-- Form Name -->
-            <legend>New Patient</legend>
+            <legend>Patient details</legend>
             <!-- Text input-->
             <div class="control-group">
                 <label class="control-label" for="Id">Id</label>
                 <div class="controls">
-                    <input id="id" ng-model="Id" name="Id" placeholder="Id" class="input-xlarge" required="" type="text">
+                    <input id="id" ng-model="Id" name="Id" placeholder="Id" class="input-xlarge" required="" type="text" ng-disabled="isDisabled()">
                     <p class="help-block">Patients id</p>
                 </div>
             </div>
@@ -40,7 +73,7 @@
             <div class="control-group">
                 <label class="control-label" for="FirstName">First name</label>
                 <div class="controls">
-                    <input id="firstName" ng-model="FirstName" name="firstName" placeholder="First name" class="input-xlarge" required="" type="text">
+                    <input id="firstName" ng-model="FirstName" name="firstName" placeholder="First name" class="input-xlarge" ng-disabled="isDisabled()" required="" type="text">
                     <p class="help-block">Patients first name</p>
                 </div>
             </div>
@@ -49,7 +82,7 @@
             <div class="control-group">
                 <label class="control-label" for="LastName">Last name</label>
                 <div class="controls">
-                    <input id="LastName" ng-model="LastName"  name="LastName" placeholder="Last name" class="input-xlarge" required="" type="text">
+                    <input id="LastName" ng-model="LastName" name="LastName" placeholder="Last name" class="input-xlarge" ng-disabled="isDisabled()" required="" type="text">
                     <p class="help-block">Patients last name</p>
                 </div>
             </div>
@@ -58,7 +91,7 @@
             <div class="control-group">
                 <label class="control-label" for="Address">Address</label>
                 <div class="controls">
-                    <input id="Address" ng-model="Address" name="Address" placeholder="Address" class="input-xlarge" type="text">
+                    <input id="Address" ng-model="Address" name="Address" placeholder="Address" class="input-xlarge" ng-disabled="isDisabled()" type="text">
                     <p class="help-block">Patients address</p>
                 </div>
             </div>
@@ -68,18 +101,18 @@
             <div class="control-group">
                 <label class="control-label" for="City">City</label>
                 <div class="controls">
-                    <input id="City" ng-model="City" name="City" placeholder="City" class="input-xlarge" required="" type="text">
+                    <input id="City" ng-model="City" name="City" placeholder="City" class="input-xlarge" required="" ng-disabled="isDisabled()" type="text">
                     <p class="help-block">City of living</p>
                 </div>
             </div>
 
-          
+
 
             <!-- Button -->
             <div class="control-group">
                 <label class="control-label" for="Submit"></label>
                 <div class="controls">
-                    <button id="Submit" name="Submit" class="btn btn-default">Submit</button>
+                    <button id="Submit" name="Submit" class="btn btn-default" ng-disabled="isDisabled()">Submit</button>
                 </div>
             </div>
 

@@ -29,8 +29,9 @@ namespace FhirFox.Services
 
         public async Task DeleteResourceById(string id, string type)
         {
-            object dbObject = _dbContext.Patients.Where(p => p.Id.Equals(id)).FirstOrDefault();
-            _dbContext.Set(dbObject.GetType()).Remove(dbObject);
+            DbSet dbset = _dbContext.Set(Type.GetType("FhirFox.Models.DB" + type));
+            var omgwtf = await dbset.FindAsync(id);
+            dbset.Remove(omgwtf);
             await _dbContext.SaveChangesAsync();
         }
 
@@ -50,16 +51,17 @@ namespace FhirFox.Services
 
         public async Task Add(Base resource)
         {
-            try
-            {
-                object dbObject = _modelConvertor.GetDbObject(resource);
-                _dbContext.Set(dbObject.GetType()).Add(dbObject);
-                await _dbContext.SaveChangesAsync();
-            }
-            catch (Exception e)
-            {
+            object dbObject = _modelConvertor.GetDbObject(resource);
+            _dbContext.Set(dbObject.GetType()).Add(dbObject);
+            await _dbContext.SaveChangesAsync();
+        }
 
-            }
+
+        public async Task Modify(Base resource, string type, string id)
+        {
+            var dbobject = _modelConvertor.GetDbObject(resource);
+            _dbContext.Entry(dbobject).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

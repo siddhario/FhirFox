@@ -42,7 +42,7 @@ namespace FhirFox.Handlers.Formatters
         }
 
         public override Task WriteToStreamAsync(Type type, object value, System.IO.Stream writeStream, System.Net.Http.HttpContent content, System.Net.TransportContext transportContext)
-        {    
+        {         
             byte[] bytes = FhirSerializer.SerializeToJsonBytes((Base)value);
             return writeStream.WriteAsync(bytes, 0, bytes.Length);
         }

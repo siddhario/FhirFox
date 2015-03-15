@@ -1,8 +1,10 @@
-﻿using FhirFox.Handlers.Formatters;
+﻿using FhirFox.Handlers;
+using FhirFox.Handlers.Formatters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
 
 namespace FhirFox
 {
@@ -14,6 +16,8 @@ namespace FhirFox
         
             // Web API routes
             config.MapHttpAttributeRoutes();
+
+            config.Services.Replace(typeof(IExceptionHandler), new FhirExceptionHandler());
 
             config.Formatters.Add(new FhirJsonFormatter());
 

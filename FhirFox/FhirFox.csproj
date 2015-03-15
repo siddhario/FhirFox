@@ -162,6 +162,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Handlers\FhirExceptionHandler.cs" />
     <Compile Include="Handlers\Formatters\FhirJsonFormatter.cs" />
     <Compile Include="Models\FhirDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

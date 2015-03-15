@@ -36,6 +36,14 @@ namespace FhirFox.Controllers
             await _fhirService.Add(value);
         }
 
+
+        [Route("{type}/{id}")]
+        public async Task Put(Base value, string type,string id)
+        {
+            await _fhirService.Modify(value,type,id);
+        }
+
+
         
 
         [Route("{type}/{id}")]
