@@ -164,7 +164,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Handlers\Formatters\FhirJsonFormatter.cs" />
-    <Compile Include="Handlers\Formatters\FhirJsonSyncFormatter.cs" />
     <Compile Include="Models\FhirDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\FhirService.cs" />
@@ -225,6 +224,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Home\PatientDetails.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

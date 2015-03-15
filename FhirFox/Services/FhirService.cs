@@ -22,19 +22,9 @@ namespace FhirFox.Services
 
         public async Task<Base> GetResourceById(string id, string type)
         {
-            return await Task.Factory.StartNew<Base>(() =>
-                {
-                    Base fhirObject = null;
-                    if (type.Equals("Patient"))
-                    {
-                        var omgwtf = _dbContext.Patients.Where(p => p.Id.Equals(id)).FirstOrDefault();
-                        fhirObject = _modelConvertor.GetFhirObject(omgwtf);
-
-                    }
-                    return fhirObject;
-                }
-            );
-
+            var omgwtf = await _dbContext.Set(Type.GetType("FhirFox.Models.DB" + type)).FindAsync(id);
+            Base fhirObject = _modelConvertor.GetFhirObject(omgwtf);
+            return fhirObject;
         }
 
         public async Task DeleteResourceById(string id, string type)

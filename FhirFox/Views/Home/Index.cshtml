@@ -1,6 +1,6 @@
 ﻿<h2>Patients</h2>
 <div ng-app="patientApp" ng-controller="PatientController">
-    <table class="table table-responsive table-hover">        
+    <table class="table table-responsive table-hover">
         <thead>
             <tr>
                 <th>Search:<input type="text" ng-model="search" /></th>
@@ -21,5 +21,72 @@
             <td>{{patient.resource.address[0].city}}</td>
         </tr>
     </table>
+
+    <form class="form-horizontal" ng-submit="submit()" ng-controller="PatientController">
+        <fieldset>
+
+            <!-- Form Name -->
+            <legend>New Patient</legend>
+            <!-- Text input-->
+            <div class="control-group">
+                <label class="control-label" for="Id">Id</label>
+                <div class="controls">
+                    <input id="id" ng-model="Id" name="Id" placeholder="Id" class="input-xlarge" required="" type="text">
+                    <p class="help-block">Patients id</p>
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="control-group">
+                <label class="control-label" for="FirstName">First name</label>
+                <div class="controls">
+                    <input id="firstName" ng-model="FirstName" name="firstName" placeholder="First name" class="input-xlarge" required="" type="text">
+                    <p class="help-block">Patients first name</p>
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="control-group">
+                <label class="control-label" for="LastName">Last name</label>
+                <div class="controls">
+                    <input id="LastName" ng-model="LastName"  name="LastName" placeholder="Last name" class="input-xlarge" required="" type="text">
+                    <p class="help-block">Patients last name</p>
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="control-group">
+                <label class="control-label" for="Address">Address</label>
+                <div class="controls">
+                    <input id="Address" ng-model="Address" name="Address" placeholder="Address" class="input-xlarge" type="text">
+                    <p class="help-block">Patients address</p>
+                </div>
+            </div>
+
+
+            <!-- Text input-->
+            <div class="control-group">
+                <label class="control-label" for="City">City</label>
+                <div class="controls">
+                    <input id="City" ng-model="City" name="City" placeholder="City" class="input-xlarge" required="" type="text">
+                    <p class="help-block">City of living</p>
+                </div>
+            </div>
+
+          
+
+            <!-- Button -->
+            <div class="control-group">
+                <label class="control-label" for="Submit"></label>
+                <div class="controls">
+                    <button id="Submit" name="Submit" class="btn btn-default">Submit</button>
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+
+
+
 </div>
 
