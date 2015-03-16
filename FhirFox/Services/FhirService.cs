@@ -6,10 +6,11 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using FhirFox.Services;
 
 namespace FhirFox.Services
 {
-    public class FhirService
+    public class FhirService : IFhirService
     {
         private FhirDbContext _dbContext;
         private ModelConvertor _modelConvertor;

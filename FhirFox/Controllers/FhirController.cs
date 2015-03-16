@@ -14,8 +14,7 @@ namespace FhirFox.Controllers
     [RoutePrefix("fhir")]
     public class FhirController : ApiController
     {
-        FhirService _fhirService = new FhirService(new FhirDbContext(),new ModelConvertor());
-
+        IFhirService _fhirService = new FhirService(new FhirDbContext(), new ModelConvertor());
 
         [Route("{type}")]
         public async Task<Base> Get(string type)
@@ -38,16 +37,16 @@ namespace FhirFox.Controllers
 
 
         [Route("{type}/{id}")]
-        public async Task Put(Base value, string type,string id)
+        public async Task Put(Base value, string type, string id)
         {
-            await _fhirService.Modify(value,type,id);
+            await _fhirService.Modify(value, type, id);
         }
 
 
-        
+
 
         [Route("{type}/{id}")]
-        public async Task Delete(string id,string type)
+        public async Task Delete(string id, string type)
         {
             await _fhirService.DeleteResourceById(id, type);
         }
