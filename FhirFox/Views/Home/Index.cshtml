@@ -40,14 +40,14 @@
             <td>
                 <div class="control-group">
                     <div class="controls">
-                        <button id="modify" name="modify" ng-click="modify(patient.resource)" class="btn btn-primary">Modify</button>
+                        <button data-toggle="modal" href="#myModal1" id="modify" name="modify" ng-click="modify(patient.resource)" class="btn btn-primary btn-sm">Modify</button>
                     </div>
                 </div>
             </td>
             <td>
                 <div class="control-group">
                     <div class="controls">
-                        <button id="remove" name="remove" ng-click="remove(patient.resource)" class="btn btn-danger">Remove</button>
+                        <button id="remove" name="remove" ng-click="remove(patient.resource)" class="btn btn-danger btn-sm">Remove</button>
                     </div>
                 </div>
             </td>
@@ -63,79 +63,77 @@
     </div>
 
 
+    <!-- Button trigger modal -->    
+    <button data-toggle="modal" href="#myModal1" class="btn btn-primary" id="add" name="add" ng-click="add()">New patient</button>
 
-
-
-    <form class="form-horizontal" ng-submit="submit()">
-        <fieldset>
-
-            <div class="controls">
-                <button id="add" name="add" ng-click="add()" class="btn btn-success" ng-disabled="!isDisabled()">New patient</button>
-                <button id="cancel" name="cancel" ng-click="cancel()" class="btn btn-danger" ng-show="!isDisabled()">Cancel</button>
-            </div>
-
-            <!-- Form Name -->
-            <legend>Patient details</legend>
-            <!-- Text input-->
-            <div class="control-group">
-                <label class="control-label" for="Id">Id</label>
-                <div class="controls">
-                    <input id="id" ng-model="Id" name="Id" placeholder="Id" class="input-xlarge" required="" type="text" ng-disabled="isDisabled()">
-                    <p class="help-block">Patients id</p>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Patient details</h4>
                 </div>
-            </div>
+                <div class="modal-body">
 
-            <!-- Text input-->
-            <div class="control-group">
-                <label class="control-label" for="FirstName">First name</label>
-                <div class="controls">
-                    <input id="firstName" ng-model="FirstName" name="firstName" placeholder="First name" class="input-xlarge" ng-disabled="isDisabled()" required="" type="text">
-                    <p class="help-block">Patients first name</p>
+                    <form class="form-horizontal" ng-submit="submit()">
+                        <fieldset>
+                          
+                            <!-- Form Name -->
+                        
+                            <!-- Text input-->
+                            <div class="control-group">
+                                <label class="control-label" for="Id">Id</label>
+                                <div class="controls">
+                                    <input id="id" ng-model="Id" name="Id" placeholder="Id" class="input-xlarge" required="" type="text" ng-disabled="isDisabled()">
+                                    <p class="help-block">Patients id</p>
+                                </div>
+                            </div>
+                            <!-- Text input-->
+                            <div class="control-group">
+                                <label class="control-label" for="FirstName">First name</label>
+                                <div class="controls">
+                                    <input id="firstName" ng-model="FirstName" name="firstName" placeholder="First name" class="input-xlarge" ng-disabled="isDisabled()" required="" type="text">
+                                    <p class="help-block">Patients first name</p>
+                                </div>
+                            </div>
+                            <!-- Text input-->
+                            <div class="control-group">
+                                <label class="control-label" for="LastName">Last name</label>
+                                <div class="controls">
+                                    <input id="LastName" ng-model="LastName" name="LastName" placeholder="Last name" class="input-xlarge" ng-disabled="isDisabled()" required="" type="text">
+                                    <p class="help-block">Patients last name</p>
+                                </div>
+                            </div>
+                            <!-- Text input-->
+                            <div class="control-group">
+                                <label class="control-label" for="Address">Address</label>
+                                <div class="controls">
+                                    <input id="Address" ng-model="Address" name="Address" placeholder="Address" class="input-xlarge" ng-disabled="isDisabled()" type="text">
+                                    <p class="help-block">Patients address</p>
+                                </div>
+                            </div>
+
+                            <!-- Text input-->
+                            <div class="control-group">
+                                <label class="control-label" for="City">City</label>
+                                <div class="controls">
+                                    <input id="City" ng-model="City" name="City" placeholder="City" class="input-xlarge" required="" ng-disabled="isDisabled()" type="text">
+                                    <p class="help-block">City of living</p>
+                                </div>
+                            </div>                        
+                        </fieldset>
+                    </form>
+
                 </div>
-            </div>
-
-            <!-- Text input-->
-            <div class="control-group">
-                <label class="control-label" for="LastName">Last name</label>
-                <div class="controls">
-                    <input id="LastName" ng-model="LastName" name="LastName" placeholder="Last name" class="input-xlarge" ng-disabled="isDisabled()" required="" type="text">
-                    <p class="help-block">Patients last name</p>
+                <div class="modal-footer">
+                    <button ng-click="submit()" type="button" class="btn btn-success" data-dismiss="modal">Save changes</button>
+                    <button ng-click="cancel()" type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                  
                 </div>
-            </div>
-
-            <!-- Text input-->
-            <div class="control-group">
-                <label class="control-label" for="Address">Address</label>
-                <div class="controls">
-                    <input id="Address" ng-model="Address" name="Address" placeholder="Address" class="input-xlarge" ng-disabled="isDisabled()" type="text">
-                    <p class="help-block">Patients address</p>
-                </div>
-            </div>
-
-
-            <!-- Text input-->
-            <div class="control-group">
-                <label class="control-label" for="City">City</label>
-                <div class="controls">
-                    <input id="City" ng-model="City" name="City" placeholder="City" class="input-xlarge" required="" ng-disabled="isDisabled()" type="text">
-                    <p class="help-block">City of living</p>
-                </div>
-            </div>
-
-
-
-            <!-- Button -->
-            <div class="control-group">
-                <label class="control-label" for="Submit"></label>
-                <div class="controls">
-                    <button id="Submit" name="Submit" class="btn btn-default" ng-disabled="isDisabled()">Submit</button>
-                </div>
-            </div>
-
-        </fieldset>
-    </form>
-
-
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
 </div>
 

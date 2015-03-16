@@ -10,7 +10,7 @@ namespace FhirFox.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
+            ViewBag.Title = "Patients";
 
             return View();
         }
