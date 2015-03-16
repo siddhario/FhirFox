@@ -70,7 +70,8 @@
             <fieldset>
 
                 <div class="controls">
-                    <button id="add" name="add" ng-click="add()" class="btn btn-success">New patient</button>
+                    <button id="add" name="add" ng-click="add()" class="btn btn-success" ng-disabled="!isDisabled()" >New patient</button>
+                    <button id="cancel" name="cancel" ng-click="cancel()" class="btn btn-danger" ng-show="!isDisabled()" >Cancel</button>
                 </div>
 
                 <!-- Form Name -->

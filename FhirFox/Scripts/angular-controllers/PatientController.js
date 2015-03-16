@@ -137,6 +137,13 @@ function PatientController($scope, $http) {
     };
 
 
+    $scope.cancel = function()
+    {
+        $scope.mode = "READ";
+    }
+   
+
+
     $scope.loadData();
 
 
