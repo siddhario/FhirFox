@@ -29,7 +29,9 @@ namespace FhirFox
             "~/Scripts/angular.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/angular-controllers").Include(
-          "~/Scripts/angular-controllers/ngPatientController.js"));
+          "~/Scripts/angular-controllers/ngPatientController.js",
+            "~/Scripts/angular-controllers/PatientController.js",
+            "~/Scripts/angular-controllers/dirPagination.js"));
         }
     }
 }
