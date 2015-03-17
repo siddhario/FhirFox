@@ -176,8 +176,10 @@
     <Compile Include="Handlers\Formatters\FhirJsonFormatter.cs" />
     <Compile Include="Models\FhirDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resolver\UnityResolver.cs" />
     <Compile Include="Services\FhirService.cs" />
     <Compile Include="Services\IFhirService.cs" />
+    <Compile Include="Services\IModelConvertor.cs" />
     <Compile Include="Services\ModelConvertor.cs" />
   </ItemGroup>
   <ItemGroup>

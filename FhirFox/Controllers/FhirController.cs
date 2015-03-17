@@ -14,7 +14,13 @@ namespace FhirFox.Controllers
     [RoutePrefix("fhir")]
     public class FhirController : ApiController
     {
-        IFhirService _fhirService = new FhirService(new FhirDbContext(), new ModelConvertor());
+        IFhirService _fhirService;
+
+        public FhirController(IFhirService fhirService)
+        {
+            _fhirService = fhirService;
+        }
+        //= new FhirService(new FhirDbContext(), new ModelConvertor());
 
         [Route("{type}")]
         public async Task<Base> Get(string type)

@@ -13,9 +13,9 @@ namespace FhirFox.Services
     public class FhirService : IFhirService
     {
         private FhirDbContext _dbContext;
-        private ModelConvertor _modelConvertor;
+        private IModelConvertor _modelConvertor;
 
-        public FhirService(FhirDbContext dbContext, ModelConvertor modelConvertor)
+        public FhirService(FhirDbContext dbContext, IModelConvertor modelConvertor)
         {
             _dbContext = dbContext;
             _modelConvertor = modelConvertor;

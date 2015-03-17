@@ -1,5 +1,8 @@
 ﻿using FhirFox.Handlers;
 using FhirFox.Handlers.Formatters;
+using FhirFox.Resolver;
+using FhirFox.Services;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +22,15 @@ namespace FhirFox
 
             config.Services.Replace(typeof(IExceptionHandler), new FhirExceptionHandler());
 
+            //DEPENDENCY INJECTION
+            var container = new UnityContainer();
+
+            container.RegisterType<IFhirService, FhirService>(new HierarchicalLifetimeManager());
+            container.RegisterType<IModelConvertor, ModelConvertor>(new HierarchicalLifetimeManager());
+
+            config.DependencyResolver = new UnityResolver(container);
+
+            //FHIR FORMATTER
             config.Formatters.Add(new FhirJsonFormatter());
 
             config.Routes.MapHttpRoute(
