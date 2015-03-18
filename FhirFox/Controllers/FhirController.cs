@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using FhirFox.Models;
 using FhirFox.Services;
 using System.Web.Http.Tracing;
+using NLog;
 
 namespace FhirFox.Controllers
 {
@@ -25,6 +26,11 @@ namespace FhirFox.Controllers
         [Route("{type}")]
         public async Task<Base> Get(string type)
         {
+            Logger logger = LogManager.GetCurrentClassLogger();
+            logger.Debug("Debug: Where are you going and why?");
+
+       
+
             return await _fhirService.GetAll(type);
         }
 
