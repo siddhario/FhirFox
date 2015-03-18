@@ -26,11 +26,6 @@ namespace FhirFox.Controllers
         [Route("{type}")]
         public async Task<Base> Get(string type)
         {
-            Logger logger = LogManager.GetCurrentClassLogger();
-            logger.Debug("Debug: Where are you going and why?");
-
-       
-
             return await _fhirService.GetAll(type);
         }
 
@@ -53,9 +48,6 @@ namespace FhirFox.Controllers
         {
             await _fhirService.Modify(value, type, id);
         }
-
-
-
 
         [Route("{type}/{id}")]
         public async Task Delete(string id, string type)
