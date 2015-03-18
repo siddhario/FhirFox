@@ -9,7 +9,6 @@ namespace FhirFox.Services
 {
     public class ModelConvertor : FhirFox.Services.IModelConvertor
     {
-
         public object GetDbObject(Base FhirModel)
         {
             switch (FhirModel.TypeName)

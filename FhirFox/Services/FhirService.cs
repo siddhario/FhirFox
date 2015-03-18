@@ -21,7 +21,7 @@ namespace FhirFox.Services
             _modelConvertor = modelConvertor;
         }
 
-        public async Task<Base> GetResourceById(string id, string type)
+        public virtual async Task<Base> GetResourceById(string id, string type)
         {
             var omgwtf = await _dbContext.Set(Type.GetType("FhirFox.Models.DB" + type)).FindAsync(id);
             Base fhirObject = _modelConvertor.GetFhirObject(omgwtf);

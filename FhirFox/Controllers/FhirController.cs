@@ -8,6 +8,7 @@ using Hl7.Fhir.Model;
 using System.Threading.Tasks;
 using FhirFox.Models;
 using FhirFox.Services;
+using System.Web.Http.Tracing;
 
 namespace FhirFox.Controllers
 {
@@ -17,10 +18,9 @@ namespace FhirFox.Controllers
         IFhirService _fhirService;
 
         public FhirController(IFhirService fhirService)
-        {
+        {          
             _fhirService = fhirService;
         }
-        //= new FhirService(new FhirDbContext(), new ModelConvertor());
 
         [Route("{type}")]
         public async Task<Base> Get(string type)
