@@ -7,6 +7,7 @@ using System.Web;
 using System.Threading.Tasks;
 using Hl7.Fhir.Serialization;
 using Newtonsoft.Json;
+using Hl7.Fhir.Rest;
 
 namespace FhirFox.Handlers.Formatters
 {
@@ -44,6 +45,7 @@ namespace FhirFox.Handlers.Formatters
         public override Task WriteToStreamAsync(Type type, object value, System.IO.Stream writeStream, System.Net.Http.HttpContent content, System.Net.TransportContext transportContext)
         {         
             byte[] bytes = FhirSerializer.SerializeToJsonBytes((Base)value);
+
             return writeStream.WriteAsync(bytes, 0, bytes.Length);
         }
 

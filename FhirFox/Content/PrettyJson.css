@@ -4,3 +4,8 @@
 .boolean { color: blue; }
 .null { color: magenta; }
 .key { color: red; }
+
+.modal-content {
+    /* new custom width */
+  width: 750px;
+}
