@@ -114,8 +114,36 @@ function PatientController($scope, $http) {
     }
 
 
+    $scope.prettify = function (json) {
+        if (typeof json != 'string') {
+            json = JSON.stringify(json, undefined, 2);
+        }
+        json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+            var cls = 'number';
+            if (/^"/.test(match)) {
+                if (/:$/.test(match)) {
+                    cls = 'key';
+                } else {
+                    cls = 'string';
+                }
+            } else if (/true|false/.test(match)) {
+                cls = 'boolean';
+            } else if (/null/.test(match)) {
+                cls = 'null';
+            }
+            //return match;
+            return '<span class="' + cls + '">' + match + '</span>';
+        });
+    }
+
     //SELECT DATA FUNCTION
     $scope.select = function (object) {
+
+        var prettyJsonData = $scope.prettify(object);
+
+        document.getElementById("prettyJson").innerHTML = prettyJsonData;
+
         if ($scope.mode != "ADD") {
             $scope.Id = object.id;
             $scope.FirstName = object.name[0].given[0];
@@ -144,6 +172,8 @@ function PatientController($scope, $http) {
     $scope.setCurrent = function (currentObject) {
         $scope.current = currentObject;
     }
+
+   
 
 
     $scope.loadData();
