@@ -1,9 +1,11 @@
 ﻿using System;
+using Hl7.Fhir.Model;
+
 namespace FhirFox.Services
 {
     public interface IModelConvertor
     {
-        object GetDbObject(Hl7.Fhir.Model.Base FhirModel);
-        Hl7.Fhir.Model.Base GetFhirObject(object dbObject);
+        object GetDbObject(Base FhirModel);
+        Base GetFhirObject(object dbObject);
     }
 }

@@ -1,4 +1,5 @@
-﻿using FhirFox.Handlers;
+﻿using FhirFox.Controllers;
+using FhirFox.Handlers;
 using FhirFox.Handlers.Formatters;
 using FhirFox.Resolver;
 using FhirFox.Services;
@@ -16,14 +17,14 @@ namespace FhirFox
     public static class WebApiConfig
     {
 
-      
+
 
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
 
-           // config.EnableSystemDiagnosticsTracing();    
-         
+            // config.EnableSystemDiagnosticsTracing();    
+
             // Web API routes
             config.MapHttpAttributeRoutes();
 

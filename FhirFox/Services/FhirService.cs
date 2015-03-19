@@ -28,7 +28,7 @@ namespace FhirFox.Services
             return fhirObject;
         }
 
-        public async Task DeleteResourceById(string id, string type)
+        public virtual async Task DeleteResourceById(string id, string type)
         {
             DbSet dbset = _dbContext.Set(Type.GetType("FhirFox.Models.DB" + type));
             var omgwtf = await dbset.FindAsync(id);
@@ -37,7 +37,7 @@ namespace FhirFox.Services
         }
 
 
-        public async Task<Base> GetAll(string type)
+        public virtual async Task<Base> GetAll(string type)
         {
             Bundle b = new Bundle();
             List<object> list = await _dbContext.Set(Type.GetType("FhirFox.Models.DB" + type)).ToListAsync();
@@ -50,7 +50,7 @@ namespace FhirFox.Services
             return b;
         }
 
-        public async Task Add(Base resource)
+        public virtual async Task Add(Base resource)
         {
             object dbObject = _modelConvertor.GetDbObject(resource);
             _dbContext.Set(dbObject.GetType()).Add(dbObject);
@@ -58,7 +58,7 @@ namespace FhirFox.Services
         }
 
 
-        public async Task Modify(Base resource, string type, string id)
+        public virtual async Task Modify(Base resource, string type, string id)
         {
             var dbobject = _modelConvertor.GetDbObject(resource);
             _dbContext.Entry(dbobject).State = EntityState.Modified;

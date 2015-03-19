@@ -1,8 +1,9 @@
 namespace FhirFox.Models
 {
     using System;
-    using System.Data.Entity;
-    using System.Linq;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 
     public class FhirDbContext : DbContext
     {
@@ -30,5 +31,22 @@ namespace FhirFox.Models
         public string LastName { get; set; }
         public string City { get; set; }
         public string Address { get; set; }
+        public string Pin { get; set; }
+        public string PhoneNumber { get; set; }
+        public string EmailAddress { get; set; }
+        public string Gender { get; set; }
+        public DateTime? BirthDate { get; set; }
+        public bool? Deceased { get; set; }
+        public string MaritalStatus { get; set; }
+        public string ContactPersonFirstName {get;set;}
+        public string ContactPersonLastName { get; set; }
+        public string ContactPersonAddress { get; set; }
+        public string ContactPersonPhone { get; set; }
+        public bool? Active { get; set; }
+        public string Race { get; set; }
+        public string Ethnicity { get; set; }
+        public string Religion { get; set; }
+        public string MothersMaidenName { get; set; }
+        public string PlaceOfBirth { get; set; }       
     }
 }
