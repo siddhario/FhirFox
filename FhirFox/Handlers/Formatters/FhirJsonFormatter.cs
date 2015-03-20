@@ -55,6 +55,9 @@ namespace FhirFox.Handlers.Formatters
             try
             {
                 Base b = FhirParser.ParseFromJson(ts);
+              
+        
+
                 return b;
             }
             catch(Exception e)

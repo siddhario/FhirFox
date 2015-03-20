@@ -12,12 +12,9 @@ function PatientController($scope, $http) {
     $scope.pageSize = 10;
     $scope.patients = [];
 
-
-
     $scope.pageChangeHandler = function (num) {
         console.log('meals page changed to ' + num);
     };
-
 
     // LOAD DATA FUNCTION
     $scope.loadData = function () {
@@ -34,6 +31,50 @@ function PatientController($scope, $http) {
      });
     };
 
+    $scope.buildResource = function () {
+        var data = {};
+
+        data["resourceType"] = "Patient";
+
+        if ($scope.Id != null)
+            data["id"] = $scope.Id;
+
+        if ($scope.Pin != null)
+            data["identifier"] = [{ "system": "http://pin.fhir.com", "value": $scope.Pin }];
+
+
+        if ($scope.FirstName != null || $scope.LastName != null) {
+            var name = {};
+            if ($scope.FirstName != null) {
+                name["given"] = [$scope.FirstName];
+            }
+            if ($scope.LastName != null) {
+                name["family"] = [$scope.LastName];
+            }
+            data["name"] = [name];
+        }
+
+        if ($scope.Address != null || $scope.City != null) {
+            var address = {};
+            if ($scope.Address != null)
+                address["line"] = [$scope.Address];
+            if ($scope.City != null)
+                address["city"] = $scope.City;
+            data["address"] = address;
+        }
+
+        if ($scope.Email != null || $scope.Phone != null)
+        {
+            var telecom = [];
+            if ($scope.Email != null) 
+                telecom.push({ "system": "email", "value": $scope.Email });
+            if ($scope.Phone != null) 
+                telecom.push({ "system": "phone", "value": $scope.Phone });
+            data["telecom"] = telecom;
+        }
+
+        return data;
+    }
 
     //POST DATA FUNCTION
     $scope.submit = function () {
@@ -42,23 +83,7 @@ function PatientController($scope, $http) {
         $http.defaults.headers.post['Content-Type'] = 'application/json+fhir';
         $http.defaults.headers.put['Content-Type'] = 'application/json+fhir';
 
-
-
-        //COLLECTING DATA INTO FHIR RESOURCE
-        var data = {
-            "resourceType": "Patient",
-            "id": $scope.Id,
-            "name": [
-                  {
-                      "family": [$scope.LastName],
-                      "given": [$scope.FirstName]
-                  }],
-            "address": [
-                {
-                    "line": [$scope.Address]
-                    , "city": $scope.City
-                }]
-        };
+        var data = $scope.buildResource();
 
         if ($scope.mode == "MODIFY") {
             //POSTING DATA
@@ -87,18 +112,17 @@ function PatientController($scope, $http) {
         };
     };
 
-
-
     $scope.add = function () {
         $scope.mode = "ADD";
         $scope.Id = null;
+        $scope.Pin = null;
         $scope.FirstName = null;
         $scope.LastName = null;
         $scope.Address = null;
         $scope.City = null;
+        $scope.Phone = null;
+        $scope.Email = null;
     }
-
-
 
     //DELETE DATA FUNCTION
     $scope.remove = function (object) {
@@ -112,7 +136,6 @@ function PatientController($scope, $http) {
          alert(data.text.div);
      });
     }
-
 
     $scope.prettify = function (json) {
         if (typeof json != 'string') {
@@ -146,10 +169,34 @@ function PatientController($scope, $http) {
 
         if ($scope.mode != "ADD") {
             $scope.Id = object.id;
-            $scope.FirstName = object.name[0].given[0];
-            $scope.LastName = object.name[0].family[0];
-            $scope.Address = object.address[0].line[0];
-            $scope.City = object.address[0].city;
+
+            if(object.identifier.length!=0)
+                $scope.Pin = object.identifier[0].value;
+
+            if (object.name.length != 0 && object.name[0].given.length != 0)
+                $scope.FirstName = object.name[0].given[0];
+
+            if (object.name.length != 0 && object.name[0].family.length != 0)
+                $scope.LastName = object.name[0].family[0];
+
+            if (object.address.length != 0 && object.address[0].line.length != 0)
+                $scope.Address = object.address[0].line[0];
+
+            if (object.address.length != 0)
+                $scope.City = object.address[0].city;
+
+            if (object.telecom != null && object.telecom.length != 0)
+            {
+                for (var tel in object.telecom)
+                {
+                    if(tel["system"]=="email")
+                        $scope.Email = tel.value;
+
+                    if (tel["system"] == "phone")
+                        $scope.Phone = tel.value;
+                }
+            }              
+         
         }
     }
 
@@ -158,12 +205,9 @@ function PatientController($scope, $http) {
         $scope.mode = "MODIFY";
     }
 
-
-
     $scope.isDisabled = function () {
         return $scope.mode == "READ";
     };
-
 
     $scope.cancel = function () {
         $scope.mode = "READ";
@@ -173,12 +217,7 @@ function PatientController($scope, $http) {
         $scope.current = currentObject;
     }
 
-   
-
-
     $scope.loadData();
-
-
 }
 
 function OtherController($scope) {

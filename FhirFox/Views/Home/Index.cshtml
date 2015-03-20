@@ -19,24 +19,29 @@
 
     <table class="table table-responsive table-hover">
         <thead>
-
             <tr>
-                <th><a href="" ng-click="predicate = 'Id'; reverse=false">Id</a></th>
+                <th><a href="" ng-click="predicate = 'Identifier'; reverse=false">Id</a></th>
                 <th><a href="" ng-click="predicate = 'FirstName'; reverse=!reverse">First name</a></th>
                 <th><a href="" ng-click="predicate = 'LastName'; reverse=!reverse">Last name</a></th>
                 <th><a href="" ng-click="predicate = 'Address'; reverse=!reverse">Address</a></th>
                 <th><a href="" ng-click="predicate = 'City'; reverse=!reverse">City</a></th>
+                <th><a href="" ng-click="predicate = 'Phone number'; reverse=!reverse">Phone number</a></th>
+                <th><a href="" ng-click="predicate = 'EmailAddress'; reverse=!reverse">Email address</a></th>
+                <th><a href="" ng-click="predicate = 'Active'; reverse=!reverse">Active</a></th>
                 <th>Modify</th>
                 <th>Remove</th>
             </tr>
         </thead>
 
         <tr dir-paginate="patient in patients | filter:q | itemsPerPage: pageSize" current-page="currentPage" ng-click="select(patient.resource)">
-            <td>{{patient.resource.id}}</td>
+            <td>{{patient.resource.identifier[0].value}}</td>
             <td>{{patient.resource.name[0].given[0]}}</td>
             <td>{{patient.resource.name[0].family[0]}}</td>
             <td>{{patient.resource.address[0].line[0]}}</td>
             <td>{{patient.resource.address[0].city}}</td>
+            <td>{{patient.resource.telecom[0].value}}</td>
+            <td>{{patient.resource.telecom[1].value}}</td>
+            <td><input type="checkbox" disabled="disabled" ng-checked="patient.resource.active"></td>
             <td>
                 <div class="control-group">
                     <div class="controls">
@@ -91,10 +96,10 @@
                             <!-- Form Name -->
                             <!-- Text input-->
                             <div class="control-group">
-                                <label class="control-label" for="Id">Id</label>
+                                <label class="control-label" for="Pin">Pin</label>
                                 <div class="controls">
-                                    <input id="id" ng-model="Id" name="Id" placeholder="Id" class="input-xlarge" required="" type="text" ng-disabled="isDisabled()">
-                                    <p class="help-block">Patients id</p>
+                                    <input id="Pin" ng-model="Pin" name="Pin" placeholder="Pin" class="input-xlarge" required="" type="text" ng-disabled="isDisabled()">
+                                    <p class="help-block">Patients personal identification number</p>
                                 </div>
                             </div>
                             <!-- Text input-->
@@ -130,6 +135,25 @@
                                     <p class="help-block">City of living</p>
                                 </div>
                             </div>
+
+                            <!-- Text input-->
+                            <div class="control-group">
+                                <label class="control-label" for="Email address">Email address</label>
+                                <div class="controls">
+                                    <input id="Email address" ng-model="Email" name="Email address" type="text" placeholder="Email address" class="input-xlarge">
+                                    <p class="help-block">Email address</p>
+                                </div>
+                            </div>
+
+                            <!-- Text input-->
+                            <div class="control-group">
+                                <label class="control-label" for="Phone number">Phone number</label>
+                                <div class="controls">
+                                    <input id="Phone number" ng-model="Phone" name="Phone number" type="text" placeholder="Phone number" class="input-xlarge">
+                                    <p class="help-block">Phone number</p>
+                                </div>
+                            </div>
+
                         </fieldset>
                     </form>
                 </div>

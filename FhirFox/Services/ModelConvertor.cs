@@ -22,6 +22,17 @@ namespace FhirFox.Services
                         dbPatient.LastName = fhirPatient.Name[0].Family.ElementAt(0);
                         dbPatient.Address = fhirPatient.Address[0].Line.ElementAt(0);
                         dbPatient.City = fhirPatient.Address[0].City;
+                        dbPatient.Pin = fhirPatient.Identifier[0].Value;
+
+                        if (fhirPatient.Telecom != null)
+                        {
+                            ContactPoint emailAddress = fhirPatient.Telecom.Where(t => t.System == ContactPoint.ContactPointSystem.Email).ToList().FirstOrDefault();
+                            ContactPoint phoneNumber = fhirPatient.Telecom.Where(t => t.System == ContactPoint.ContactPointSystem.Phone).ToList().FirstOrDefault();
+                            if(emailAddress!=null)
+                                dbPatient.EmailAddress = emailAddress.Value;
+                            if (phoneNumber != null)
+                                dbPatient.PhoneNumber = phoneNumber.Value;
+                        }
                         return dbPatient;
                     }
                 default:

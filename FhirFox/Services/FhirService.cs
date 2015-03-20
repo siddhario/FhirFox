@@ -52,7 +52,10 @@ namespace FhirFox.Services
 
         public virtual async Task Add(Base resource)
         {
+            ((DomainResource)resource).Id = Guid.NewGuid().ToString();//???? WHERE TO PUT THIS?
+
             object dbObject = _modelConvertor.GetDbObject(resource);
+
             _dbContext.Set(dbObject.GetType()).Add(dbObject);
             await _dbContext.SaveChangesAsync();
         }
