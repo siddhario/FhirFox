@@ -3,10 +3,8 @@
 var myApp = angular.module('patientApp', ['angularUtils.directives.dirPagination']);
 
 function PatientController($scope, $http) {
-
     var url = "../fhir/Patient/";
     $scope.mode = "READ";
-
 
     $scope.currentPage = 1;
     $scope.pageSize = 10;
@@ -63,12 +61,11 @@ function PatientController($scope, $http) {
             data["address"] = address;
         }
 
-        if ($scope.Email != null || $scope.Phone != null)
-        {
+        if ($scope.Email != null || $scope.Phone != null) {
             var telecom = [];
-            if ($scope.Email != null) 
+            if ($scope.Email != null)
                 telecom.push({ "system": "email", "value": $scope.Email });
-            if ($scope.Phone != null) 
+            if ($scope.Phone != null)
                 telecom.push({ "system": "phone", "value": $scope.Phone });
             data["telecom"] = telecom;
         }
@@ -114,6 +111,11 @@ function PatientController($scope, $http) {
 
     $scope.add = function () {
         $scope.mode = "ADD";
+        $scope.clearScope();
+    }
+
+    $scope.clearScope = function()
+    {
         $scope.Id = null;
         $scope.Pin = null;
         $scope.FirstName = null;
@@ -123,7 +125,6 @@ function PatientController($scope, $http) {
         $scope.Phone = null;
         $scope.Email = null;
     }
-
     //DELETE DATA FUNCTION
     $scope.remove = function (object) {
         $http.delete(url + object.id).
@@ -168,9 +169,12 @@ function PatientController($scope, $http) {
         document.getElementById("prettyJson").innerHTML = prettyJsonData;
 
         if ($scope.mode != "ADD") {
+
+            $scope.clearScope();
+
             $scope.Id = object.id;
 
-            if(object.identifier.length!=0)
+            if (object.identifier.length != 0)
                 $scope.Pin = object.identifier[0].value;
 
             if (object.name.length != 0 && object.name[0].given.length != 0)
@@ -185,18 +189,16 @@ function PatientController($scope, $http) {
             if (object.address.length != 0)
                 $scope.City = object.address[0].city;
 
-            if (object.telecom != null && object.telecom.length != 0)
-            {
-                for (var tel in object.telecom)
-                {
-                    if(tel["system"]=="email")
+            if (object.telecom != null && object.telecom.length != 0) {
+                for (var i = 0; i < object.telecom.length; i++) {
+                    var tel = object.telecom[i];
+                    if (tel["system"] == "email")
                         $scope.Email = tel.value;
 
                     if (tel["system"] == "phone")
                         $scope.Phone = tel.value;
                 }
-            }              
-         
+            }
         }
     }
 
