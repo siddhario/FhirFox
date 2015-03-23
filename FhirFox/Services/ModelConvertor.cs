@@ -18,13 +18,46 @@ namespace FhirFox.Services
                         DBPatient dbPatient = new DBPatient();
                         Patient fhirPatient = FhirModel as Patient;
                         dbPatient.Id = fhirPatient.Id;
-                        dbPatient.FirstName = fhirPatient.Name[0].Given.ElementAt(0);
-                        dbPatient.LastName = fhirPatient.Name[0].Family.ElementAt(0);
-                        dbPatient.Address = fhirPatient.Address[0].Line.ElementAt(0);
-                        dbPatient.City = fhirPatient.Address[0].City;
+
+                 
+                        dbPatient.Active = fhirPatient.Active;
+                        if (fhirPatient.Deceased!=null)
+                            dbPatient.Deceased = ((FhirBoolean)fhirPatient.Deceased).Value;
+
+                        switch (fhirPatient.Gender)
+                        {
+                            case AdministrativeGender.Male:
+                                {
+                                    dbPatient.Gender = "M";
+                                    break;
+                                }
+                            case AdministrativeGender.Female:
+                                {
+                                    dbPatient.Gender = "Ž";
+                                    break;
+                                }
+                            default:
+                                {
+                                    dbPatient.Gender = null;
+                                    break;
+                                }
+                        }
+
+                        if (fhirPatient.Name.Count > 0)
+                        {
+                            if (fhirPatient.Name[0].Given.Count() > 0)
+                                dbPatient.FirstName = fhirPatient.Name[0].Given.ElementAt(0);
+                            if (fhirPatient.Name[0].Family.Count() > 0)
+                                dbPatient.LastName = fhirPatient.Name[0].Family.ElementAt(0);
+                        }
+                        if (fhirPatient.Address.Count > 0)
+                        {
+                            if (fhirPatient.Address[0].Line.Count() > 0)
+                                dbPatient.Address = fhirPatient.Address[0].Line.ElementAt(0);
+                            dbPatient.City = fhirPatient.Address[0].City;
+                        }
                         if (fhirPatient.Identifier.Count > 0)
                             dbPatient.Pin = fhirPatient.Identifier[0].Value;
-
 
                         ContactPoint emailAddress = fhirPatient.Telecom.Where(t => t.System == ContactPoint.ContactPointSystem.Email).ToList().FirstOrDefault();
                         ContactPoint phoneNumber = fhirPatient.Telecom.Where(t => t.System == ContactPoint.ContactPointSystem.Phone).ToList().FirstOrDefault();
@@ -32,6 +65,64 @@ namespace FhirFox.Services
                             dbPatient.EmailAddress = emailAddress.Value;
                         if (phoneNumber != null)
                             dbPatient.PhoneNumber = phoneNumber.Value;
+
+                        if (fhirPatient.BirthDate != null)
+                            dbPatient.BirthDate = DateTime.Parse(fhirPatient.BirthDate);
+
+                        if (fhirPatient.MaritalStatus != null && fhirPatient.MaritalStatus.Coding.Count > 0)
+                            dbPatient.MaritalStatus = fhirPatient.MaritalStatus.Coding.ElementAt(0).Code;
+
+
+                        if (fhirPatient.Contact.Count > 0)
+                        {
+                            Patient.ContactComponent cc = fhirPatient.Contact.ElementAt(0);
+                            if (cc.Name != null)
+                            {
+                                if (cc.Name.Family.Count() > 0)
+                                    dbPatient.ContactPersonLastName = cc.Name.Family.ElementAt(0);
+                                if (cc.Name.Given.Count() > 0)
+                                    dbPatient.ContactPersonFirstName = cc.Name.Given.ElementAt(0);
+                            }
+                            if (cc.Address != null && cc.Address.Line.Count() > 0)
+                                dbPatient.ContactPersonAddress = cc.Address.Line.ElementAt(0);
+
+                            if (cc.Telecom.Count > 0)
+                                dbPatient.PhoneNumber = cc.Telecom.ElementAt(0).Value;
+                        }
+
+                        foreach (Extension ex in fhirPatient.Extension)
+                        {
+                            switch (ex.Url)
+                            {
+                                case "http://hl7.org/fhir/ExtensionDefinition/us-core-race":
+                                    {
+                                        dbPatient.Race = ((CodeableConcept)ex.Value).Coding[0].Code;
+                                        break;
+                                    }
+
+                                case "http://hl7.org/fhir/ExtensionDefinition/us-core-religion":
+                                    {
+                                        dbPatient.Religion = ((CodeableConcept)ex.Value).Coding[0].Code;
+                                        break;
+                                    }
+
+                                case "http://hl7.org/fhir/ExtensionDefinition/us-core-ethnicity":
+                                    {
+                                        dbPatient.Ethnicity = ((CodeableConcept)ex.Value).Coding[0].Code;
+                                        break;
+                                    }
+                                case "http://hl7.org/fhir/ExtensionDefinition/patient-mothers-maiden-name":
+                                    {
+                                        dbPatient.MothersMaidenName = ((CodeableConcept)ex.Value).Coding[0].Code;
+                                        break;
+                                    }
+                                case "http://hl7.org/fhir/ExtensionDefinition/us-core-birth-place":
+                                    {
+                                        dbPatient.PlaceOfBirth = ((Address)ex.Value).Line.ToList().ElementAt(0);
+                                        break;
+                                    }
+                            }
+                        }
 
                         return dbPatient;
                     }
@@ -57,6 +148,11 @@ namespace FhirFox.Services
                         fhirPatient.Active = dbPatient.Active;
                         fhirPatient.Deceased = new FhirBoolean(dbPatient.Deceased);
 
+                        //CARE PROVIDER REFERENCE
+                        ResourceReference rr = new ResourceReference();
+                        rr.Reference = "/Practitioner/org1";
+                        fhirPatient.CareProvider = new List<ResourceReference>() { rr };                 
+                 
 
                         //GENDER
                         switch (dbPatient.Gender)
