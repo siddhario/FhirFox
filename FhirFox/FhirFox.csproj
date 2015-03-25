@@ -197,8 +197,8 @@
     <Compile Include="Resolver\UnityResolver.cs" />
     <Compile Include="Services\FhirService.cs" />
     <Compile Include="Services\IFhirService.cs" />
-    <Compile Include="Services\IModelConvertor.cs" />
-    <Compile Include="Services\ModelConvertor.cs" />
+    <Compile Include="Services\IObjectMapper.cs" />
+    <Compile Include="Services\FhirObjectMapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

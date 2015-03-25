@@ -7,7 +7,7 @@ using System.Web;
 
 namespace FhirFox.Services
 {
-    public class ModelConvertor : FhirFox.Services.IModelConvertor
+    public class FhirObjectMapper : FhirFox.Services.IObjectMapper
     {
         public object GetDbObject(Base FhirModel)
         {

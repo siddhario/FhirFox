@@ -34,7 +34,7 @@ namespace FhirFox
             var container = new UnityContainer();
 
             container.RegisterType<IFhirService, FhirService>(new HierarchicalLifetimeManager());
-            container.RegisterType<IModelConvertor, ModelConvertor>(new HierarchicalLifetimeManager());
+            container.RegisterType<IObjectMapper, FhirObjectMapper>(new HierarchicalLifetimeManager());
 
             config.DependencyResolver = new UnityResolver(container);
 

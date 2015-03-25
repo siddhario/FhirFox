@@ -13,18 +13,18 @@ namespace FhirFox.Services
     public class FhirService : IFhirService
     {
         private FhirDbContext _dbContext;
-        private IModelConvertor _modelConvertor;
+        private IObjectMapper _mapper;
 
-        public FhirService(FhirDbContext dbContext, IModelConvertor modelConvertor)
+        public FhirService(FhirDbContext dbContext, IObjectMapper mapper)
         {
             _dbContext = dbContext;
-            _modelConvertor = modelConvertor;
+            _mapper = mapper;
         }
 
         public virtual async Task<Base> GetResourceById(string id, string type)
         {
             var omgwtf = await _dbContext.Set(Type.GetType("FhirFox.Models.DB" + type)).FindAsync(id);
-            Base fhirObject = _modelConvertor.GetFhirObject(omgwtf);
+            Base fhirObject = _mapper.GetFhirObject(omgwtf);
             return fhirObject;
         }
 
@@ -44,7 +44,7 @@ namespace FhirFox.Services
             foreach (var p in list)
             {
                 Bundle.BundleEntryComponent be = new Bundle.BundleEntryComponent();
-                be.Resource = (Resource)_modelConvertor.GetFhirObject(p);
+                be.Resource = (Resource)_mapper.GetFhirObject(p);
                 b.Entry.Add(be);
             }
             return b;
@@ -54,7 +54,7 @@ namespace FhirFox.Services
         {
             ((DomainResource)resource).Id = Guid.NewGuid().ToString();//???? WHERE TO PUT THIS?
 
-            object dbObject = _modelConvertor.GetDbObject(resource);
+            object dbObject = _mapper.GetDbObject(resource);
 
             _dbContext.Set(dbObject.GetType()).Add(dbObject);
             await _dbContext.SaveChangesAsync();
@@ -63,7 +63,7 @@ namespace FhirFox.Services
 
         public virtual async Task Modify(Base resource, string type, string id)
         {
-            var dbobject = _modelConvertor.GetDbObject(resource);
+            var dbobject = _mapper.GetDbObject(resource);
             _dbContext.Entry(dbobject).State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();
         }
