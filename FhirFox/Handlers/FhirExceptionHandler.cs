@@ -17,7 +17,7 @@ namespace FhirFox.Handlers
         public override void Handle(ExceptionHandlerContext context)
         {
             OperationOutcome oo = new OperationOutcome();
-            oo.Text = new Hl7.Fhir.Model.Narrative() { Div = "This is unhandled FHIR exception !" };
+            oo.Text = new Hl7.Fhir.Model.Narrative() { Div = "This is unhandled FHIR exception: "+context.Exception.Message };
             oo.Issue.Add(new OperationOutcome.OperationOutcomeIssueComponent() { Severity = OperationOutcome.IssueSeverity.Fatal });
 
             string content = Hl7.Fhir.Serialization.FhirSerializer.SerializeResourceToJson(oo, false);
