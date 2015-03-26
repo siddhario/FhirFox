@@ -1,177 +1,197 @@
 /*==============================================================*/
 /* DBMS name:      Sybase SQL Anywhere 11                       */
-/* Created on:     3/25/2015 3:51:46 PM                         */
+/* Created on:     3/26/2015 8:26:24 AM                         */
 /*==============================================================*/
 
 
-if exists(select 1 from sys.sysforeignkey where role='FK_PATIENT__REFERENCE_PATIENT') then
-    alter table PATIENT_ADDRESS
-       delete foreign key FK_PATIENT__REFERENCE_PATIENT
+if exists(select 1 from sys.sysforeignkey where role='FK_Patient_Address') then
+    alter table ADMINISTRATIVE.PATIENT_ADDRESS
+       delete foreign key FK_Patient_Address
 end if;
 
-if exists(select 1 from sys.sysforeignkey where role='FK_PATIENT__REFERENCE_PATIENT') then
-    alter table PATIENT_CARE_PROVIDERS
-       delete foreign key FK_PATIENT__REFERENCE_PATIENT
+if exists(select 1 from sys.sysforeignkey where role='FK_Patient_Care_Providers') then
+    alter table ADMINISTRATIVE.PATIENT_CARE_PROVIDERS
+       delete foreign key FK_Patient_Care_Providers
 end if;
 
-if exists(select 1 from sys.sysforeignkey where role='FK_PATIENT__REFERENCE_PATIENT') then
-    alter table PATIENT_COMMUNICATION
-       delete foreign key FK_PATIENT__REFERENCE_PATIENT
+if exists(select 1 from sys.sysforeignkey where role='FK_Patient_Communications') then
+    alter table ADMINISTRATIVE.PATIENT_COMMUNICATION
+       delete foreign key FK_Patient_Communications
 end if;
 
-if exists(select 1 from sys.sysforeignkey where role='FK_PATIENT__REFERENCE_PATIENT') then
-    alter table PATIENT_CONTACT
-       delete foreign key FK_PATIENT__REFERENCE_PATIENT
+if exists(select 1 from sys.sysforeignkey where role='FK_Patient_Contacts') then
+    alter table ADMINISTRATIVE.PATIENT_CONTACT
+       delete foreign key FK_Patient_Contacts
 end if;
 
-if exists(select 1 from sys.sysforeignkey where role='FK_PATIENT__REFERENCE_PATIENT_') then
-    alter table PATIENT_CONTACT_RELATIONSHIP
-       delete foreign key FK_PATIENT__REFERENCE_PATIENT_
+if exists(select 1 from sys.sysforeignkey where role='FK_Patient_Contact_Relationships') then
+    alter table ADMINISTRATIVE.PATIENT_CONTACT_RELATIONSHIP
+       delete foreign key FK_Patient_Contact_Relationships
 end if;
 
-if exists(select 1 from sys.sysforeignkey where role='FK_PATIENT__REFERENCE_PATIENT_') then
-    alter table PATIENT_CONTACT_TELECOM
-       delete foreign key FK_PATIENT__REFERENCE_PATIENT_
+if exists(select 1 from sys.sysforeignkey where role='FK_Patient_Contact_Telecoms') then
+    alter table ADMINISTRATIVE.PATIENT_CONTACT_TELECOM
+       delete foreign key FK_Patient_Contact_Telecoms
 end if;
 
-if exists(select 1 from sys.sysforeignkey where role='FK_PATIENT__REFERENCE_PATIENT') then
-    alter table PATIENT_IDENTIFIER
-       delete foreign key FK_PATIENT__REFERENCE_PATIENT
+if exists(select 1 from sys.sysforeignkey where role='FK_Patient_Identifiers') then
+    alter table ADMINISTRATIVE.PATIENT_IDENTIFIER
+       delete foreign key FK_Patient_Identifiers
 end if;
 
-if exists(select 1 from sys.sysforeignkey where role='FK_PATIENT__REFERENCE_PATIENT') then
-    alter table PATIENT_LINK
-       delete foreign key FK_PATIENT__REFERENCE_PATIENT
+if exists(select 1 from sys.sysforeignkey where role='FK_Patient_Links') then
+    alter table ADMINISTRATIVE.PATIENT_LINK
+       delete foreign key FK_Patient_Links
 end if;
 
-if exists(select 1 from sys.sysforeignkey where role='FK_PATIENT__REFERENCE_PATIENT') then
-    alter table PATIENT_NAME
-       delete foreign key FK_PATIENT__REFERENCE_PATIENT
+if exists(select 1 from sys.sysforeignkey where role='FK_Patient_Names') then
+    alter table ADMINISTRATIVE.PATIENT_NAME
+       delete foreign key FK_Patient_Names
 end if;
 
-if exists(select 1 from sys.sysforeignkey where role='FK_PATIENT__REFERENCE_PATIENT') then
-    alter table PATIENT_PHOTO
-       delete foreign key FK_PATIENT__REFERENCE_PATIENT
+if exists(select 1 from sys.sysforeignkey where role='FK_Patient_Photos') then
+    alter table ADMINISTRATIVE.PATIENT_PHOTO
+       delete foreign key FK_Patient_Photos
 end if;
 
-if exists(select 1 from sys.sysforeignkey where role='FK_PATIENT__REFERENCE_PATIENT') then
-    alter table PATIENT_RACE
-       delete foreign key FK_PATIENT__REFERENCE_PATIENT
+if exists(select 1 from sys.sysforeignkey where role='FK_Patient_Races') then
+    alter table ADMINISTRATIVE.PATIENT_RACE
+       delete foreign key FK_Patient_Races
 end if;
 
-if exists(select 1 from sys.sysforeignkey where role='FK_PATIENT__REFERENCE_PATIENT') then
-    alter table PATIENT_TELECOM
-       delete foreign key FK_PATIENT__REFERENCE_PATIENT
+if exists(select 1 from sys.sysforeignkey where role='FK_Patient_Telecoms') then
+    alter table ADMINISTRATIVE.PATIENT_TELECOM
+       delete foreign key FK_Patient_Telecoms
 end if;
 
 if exists(
    select 1 from sys.systable 
    where table_name='PATIENT'
      and table_type in ('BASE', 'GBL TEMP')
+     and creator=user_id('ADMINISTRATIVE')
 ) then
-    drop table PATIENT
+    drop table ADMINISTRATIVE.PATIENT
 end if;
 
 if exists(
    select 1 from sys.systable 
    where table_name='PATIENT_ADDRESS'
      and table_type in ('BASE', 'GBL TEMP')
+     and creator=user_id('ADMINISTRATIVE')
 ) then
-    drop table PATIENT_ADDRESS
+    drop table ADMINISTRATIVE.PATIENT_ADDRESS
 end if;
 
 if exists(
    select 1 from sys.systable 
    where table_name='PATIENT_CARE_PROVIDERS'
      and table_type in ('BASE', 'GBL TEMP')
+     and creator=user_id('ADMINISTRATIVE')
 ) then
-    drop table PATIENT_CARE_PROVIDERS
+    drop table ADMINISTRATIVE.PATIENT_CARE_PROVIDERS
 end if;
 
 if exists(
    select 1 from sys.systable 
    where table_name='PATIENT_COMMUNICATION'
      and table_type in ('BASE', 'GBL TEMP')
+     and creator=user_id('ADMINISTRATIVE')
 ) then
-    drop table PATIENT_COMMUNICATION
+    drop table ADMINISTRATIVE.PATIENT_COMMUNICATION
 end if;
 
 if exists(
    select 1 from sys.systable 
    where table_name='PATIENT_CONTACT'
      and table_type in ('BASE', 'GBL TEMP')
+     and creator=user_id('ADMINISTRATIVE')
 ) then
-    drop table PATIENT_CONTACT
+    drop table ADMINISTRATIVE.PATIENT_CONTACT
 end if;
 
 if exists(
    select 1 from sys.systable 
    where table_name='PATIENT_CONTACT_RELATIONSHIP'
      and table_type in ('BASE', 'GBL TEMP')
+     and creator=user_id('ADMINISTRATIVE')
 ) then
-    drop table PATIENT_CONTACT_RELATIONSHIP
+    drop table ADMINISTRATIVE.PATIENT_CONTACT_RELATIONSHIP
 end if;
 
 if exists(
    select 1 from sys.systable 
    where table_name='PATIENT_CONTACT_TELECOM'
      and table_type in ('BASE', 'GBL TEMP')
+     and creator=user_id('ADMINISTRATIVE')
 ) then
-    drop table PATIENT_CONTACT_TELECOM
+    drop table ADMINISTRATIVE.PATIENT_CONTACT_TELECOM
 end if;
 
 if exists(
    select 1 from sys.systable 
    where table_name='PATIENT_IDENTIFIER'
      and table_type in ('BASE', 'GBL TEMP')
+     and creator=user_id('ADMINISTRATIVE')
 ) then
-    drop table PATIENT_IDENTIFIER
+    drop table ADMINISTRATIVE.PATIENT_IDENTIFIER
 end if;
 
 if exists(
    select 1 from sys.systable 
    where table_name='PATIENT_LINK'
      and table_type in ('BASE', 'GBL TEMP')
+     and creator=user_id('ADMINISTRATIVE')
 ) then
-    drop table PATIENT_LINK
+    drop table ADMINISTRATIVE.PATIENT_LINK
 end if;
 
 if exists(
    select 1 from sys.systable 
    where table_name='PATIENT_NAME'
      and table_type in ('BASE', 'GBL TEMP')
+     and creator=user_id('ADMINISTRATIVE')
 ) then
-    drop table PATIENT_NAME
+    drop table ADMINISTRATIVE.PATIENT_NAME
 end if;
 
 if exists(
    select 1 from sys.systable 
    where table_name='PATIENT_PHOTO'
      and table_type in ('BASE', 'GBL TEMP')
+     and creator=user_id('ADMINISTRATIVE')
 ) then
-    drop table PATIENT_PHOTO
+    drop table ADMINISTRATIVE.PATIENT_PHOTO
 end if;
 
 if exists(
    select 1 from sys.systable 
    where table_name='PATIENT_RACE'
      and table_type in ('BASE', 'GBL TEMP')
+     and creator=user_id('ADMINISTRATIVE')
 ) then
-    drop table PATIENT_RACE
+    drop table ADMINISTRATIVE.PATIENT_RACE
 end if;
 
 if exists(
    select 1 from sys.systable 
    where table_name='PATIENT_TELECOM'
      and table_type in ('BASE', 'GBL TEMP')
+     and creator=user_id('ADMINISTRATIVE')
 ) then
-    drop table PATIENT_TELECOM
+    drop table ADMINISTRATIVE.PATIENT_TELECOM
 end if;
+
+revoke connect from ADMINISTRATIVE;
+
+/*==============================================================*/
+/* User: ADMINISTRATIVE                                         */
+/*==============================================================*/
+grant connect to ADMINISTRATIVE identified by "";
 
 /*==============================================================*/
 /* Table: PATIENT                                               */
 /*==============================================================*/
-create table PATIENT 
+create table ADMINISTRATIVE.PATIENT 
 (
    PatientId            varchar(64)                    not null,
    BirthDate            DateTime                       null,
@@ -202,7 +222,7 @@ create table PATIENT
 /*==============================================================*/
 /* Table: PATIENT_ADDRESS                                       */
 /*==============================================================*/
-create table PATIENT_ADDRESS 
+create table ADMINISTRATIVE.PATIENT_ADDRESS 
 (
    PatientId            varchar(64)                    not null,
    PatientAddressId     int                            not null,
@@ -217,7 +237,7 @@ create table PATIENT_ADDRESS
 /*==============================================================*/
 /* Table: PATIENT_CARE_PROVIDERS                                */
 /*==============================================================*/
-create table PATIENT_CARE_PROVIDERS 
+create table ADMINISTRATIVE.PATIENT_CARE_PROVIDERS 
 (
    PatientCareProviderId int                            not null,
    PatientId            varchar(64)                    not null,
@@ -229,7 +249,7 @@ create table PATIENT_CARE_PROVIDERS
 /*==============================================================*/
 /* Table: PATIENT_COMMUNICATION                                 */
 /*==============================================================*/
-create table PATIENT_COMMUNICATION 
+create table ADMINISTRATIVE.PATIENT_COMMUNICATION 
 (
    PatientCommunicationId int                            not null,
    PatientId            varchar(64)                    not null,
@@ -238,13 +258,13 @@ create table PATIENT_COMMUNICATION
    constraint PK_PATIENT_COMMUNICATION primary key clustered (PatientCommunicationId)
 );
 
-comment on column PATIENT_COMMUNICATION.Code is 
+comment on column ADMINISTRATIVE.PATIENT_COMMUNICATION.Code is 
 'http://tools.ietf.org/html/bcp47';
 
 /*==============================================================*/
 /* Table: PATIENT_CONTACT                                       */
 /*==============================================================*/
-create table PATIENT_CONTACT 
+create table ADMINISTRATIVE.PATIENT_CONTACT 
 (
    PatientContactId     int                            not null,
    PatientId            varchar(64)                    not null,
@@ -274,7 +294,7 @@ create table PATIENT_CONTACT
 /*==============================================================*/
 /* Table: PATIENT_CONTACT_RELATIONSHIP                          */
 /*==============================================================*/
-create table PATIENT_CONTACT_RELATIONSHIP 
+create table ADMINISTRATIVE.PATIENT_CONTACT_RELATIONSHIP 
 (
    PatientContactRelationshipId int                            not null,
    PatientContactId     int                            not null,
@@ -283,13 +303,13 @@ create table PATIENT_CONTACT_RELATIONSHIP
    constraint PK_PATIENT_CONTACT_RELATIONSHI primary key clustered (PatientContactRelationshipId)
 );
 
-comment on column PATIENT_CONTACT_RELATIONSHIP.Code is 
+comment on column ADMINISTRATIVE.PATIENT_CONTACT_RELATIONSHIP.Code is 
 'V3 - 2.16.840.1.113883.5.111';
 
 /*==============================================================*/
 /* Table: PATIENT_CONTACT_TELECOM                               */
 /*==============================================================*/
-create table PATIENT_CONTACT_TELECOM 
+create table ADMINISTRATIVE.PATIENT_CONTACT_TELECOM 
 (
    PatientContactId     int                            not null,
    PatientContactTelecomId int                            not null,
@@ -304,7 +324,7 @@ create table PATIENT_CONTACT_TELECOM
 /*==============================================================*/
 /* Table: PATIENT_IDENTIFIER                                    */
 /*==============================================================*/
-create table PATIENT_IDENTIFIER 
+create table ADMINISTRATIVE.PATIENT_IDENTIFIER 
 (
    PatientIdentifierId  int                            not null,
    PatientId            varchar(64)                    not null,
@@ -316,7 +336,7 @@ create table PATIENT_IDENTIFIER
 /*==============================================================*/
 /* Table: PATIENT_LINK                                          */
 /*==============================================================*/
-create table PATIENT_LINK 
+create table ADMINISTRATIVE.PATIENT_LINK 
 (
    PatientLinkId        int                            not null,
    PatientId            varchar(64)                    not null,
@@ -325,13 +345,13 @@ create table PATIENT_LINK
    constraint PK_PATIENT_LINK primary key clustered (PatientLinkId)
 );
 
-comment on column PATIENT_LINK.Type is 
+comment on column ADMINISTRATIVE.PATIENT_LINK.Type is 
 'http://hl7.org/fhir/link-type';
 
 /*==============================================================*/
 /* Table: PATIENT_NAME                                          */
 /*==============================================================*/
-create table PATIENT_NAME 
+create table ADMINISTRATIVE.PATIENT_NAME 
 (
    PatientNameId        int                            not null,
    PatientId            varchar(64)                    not null,
@@ -350,7 +370,7 @@ create table PATIENT_NAME
 /*==============================================================*/
 /* Table: PATIENT_PHOTO                                         */
 /*==============================================================*/
-create table PATIENT_PHOTO 
+create table ADMINISTRATIVE.PATIENT_PHOTO 
 (
    PatientPhotoId       int                            not null,
    PatientId            varchar(64)                    null,
@@ -363,16 +383,16 @@ create table PATIENT_PHOTO
    constraint PK_PATIENT_PHOTO primary key clustered (PatientPhotoId)
 );
 
-comment on column PATIENT_PHOTO.ContentType is 
+comment on column ADMINISTRATIVE.PATIENT_PHOTO.ContentType is 
 'http://www.rfc-editor.org/bcp/bcp13.txt';
 
-comment on column PATIENT_PHOTO.Language is 
+comment on column ADMINISTRATIVE.PATIENT_PHOTO.Language is 
 'http://tools.ietf.org/html/bcp47';
 
 /*==============================================================*/
 /* Table: PATIENT_RACE                                          */
 /*==============================================================*/
-create table PATIENT_RACE 
+create table ADMINISTRATIVE.PATIENT_RACE 
 (
    PatientRaceId        int                            not null,
    PatientId            varchar(64)                    not null,
@@ -384,7 +404,7 @@ create table PATIENT_RACE
 /*==============================================================*/
 /* Table: PATIENT_TELECOM                                       */
 /*==============================================================*/
-create table PATIENT_TELECOM 
+create table ADMINISTRATIVE.PATIENT_TELECOM 
 (
    PatientTelecomId     int                            not null,
    PatientId            varchar(64)                    not null,
@@ -396,75 +416,75 @@ create table PATIENT_TELECOM
    constraint PK_PATIENT_TELECOM primary key clustered (PatientTelecomId)
 );
 
-alter table PATIENT_ADDRESS
-   add constraint FK_PATIENT__REFERENCE_PATIENT foreign key (PatientId)
-      references PATIENT (PatientId)
+alter table ADMINISTRATIVE.PATIENT_ADDRESS
+   add constraint FK_Patient_Address foreign key (PatientId)
+      references ADMINISTRATIVE.PATIENT (PatientId)
       on update restrict
       on delete restrict;
 
-alter table PATIENT_CARE_PROVIDERS
-   add constraint FK_PATIENT__REFERENCE_PATIENT foreign key (PatientId)
-      references PATIENT (PatientId)
+alter table ADMINISTRATIVE.PATIENT_CARE_PROVIDERS
+   add constraint FK_Patient_Care_Providers foreign key (PatientId)
+      references ADMINISTRATIVE.PATIENT (PatientId)
       on update restrict
       on delete restrict;
 
-alter table PATIENT_COMMUNICATION
-   add constraint FK_PATIENT__REFERENCE_PATIENT foreign key (PatientId)
-      references PATIENT (PatientId)
+alter table ADMINISTRATIVE.PATIENT_COMMUNICATION
+   add constraint FK_Patient_Communications foreign key (PatientId)
+      references ADMINISTRATIVE.PATIENT (PatientId)
       on update restrict
       on delete restrict;
 
-alter table PATIENT_CONTACT
-   add constraint FK_PATIENT__REFERENCE_PATIENT foreign key (PatientId)
-      references PATIENT (PatientId)
+alter table ADMINISTRATIVE.PATIENT_CONTACT
+   add constraint FK_Patient_Contacts foreign key (PatientId)
+      references ADMINISTRATIVE.PATIENT (PatientId)
       on update restrict
       on delete restrict;
 
-alter table PATIENT_CONTACT_RELATIONSHIP
-   add constraint FK_PATIENT__REFERENCE_PATIENT_ foreign key (PatientContactId)
-      references PATIENT_CONTACT (PatientContactId)
+alter table ADMINISTRATIVE.PATIENT_CONTACT_RELATIONSHIP
+   add constraint FK_Patient_Contact_Relationships foreign key (PatientContactId)
+      references ADMINISTRATIVE.PATIENT_CONTACT (PatientContactId)
       on update restrict
       on delete restrict;
 
-alter table PATIENT_CONTACT_TELECOM
-   add constraint FK_PATIENT__REFERENCE_PATIENT_ foreign key (PatientContactId)
-      references PATIENT_CONTACT (PatientContactId)
+alter table ADMINISTRATIVE.PATIENT_CONTACT_TELECOM
+   add constraint FK_Patient_Contact_Telecoms foreign key (PatientContactId)
+      references ADMINISTRATIVE.PATIENT_CONTACT (PatientContactId)
       on update restrict
       on delete restrict;
 
-alter table PATIENT_IDENTIFIER
-   add constraint FK_PATIENT__REFERENCE_PATIENT foreign key (PatientId)
-      references PATIENT (PatientId)
+alter table ADMINISTRATIVE.PATIENT_IDENTIFIER
+   add constraint FK_Patient_Identifiers foreign key (PatientId)
+      references ADMINISTRATIVE.PATIENT (PatientId)
       on update restrict
       on delete restrict;
 
-alter table PATIENT_LINK
-   add constraint FK_PATIENT__REFERENCE_PATIENT foreign key (PatientId)
-      references PATIENT (PatientId)
+alter table ADMINISTRATIVE.PATIENT_LINK
+   add constraint FK_Patient_Links foreign key (PatientId)
+      references ADMINISTRATIVE.PATIENT (PatientId)
       on update restrict
       on delete restrict;
 
-alter table PATIENT_NAME
-   add constraint FK_PATIENT__REFERENCE_PATIENT foreign key (PatientId)
-      references PATIENT (PatientId)
+alter table ADMINISTRATIVE.PATIENT_NAME
+   add constraint FK_Patient_Names foreign key (PatientId)
+      references ADMINISTRATIVE.PATIENT (PatientId)
       on update restrict
       on delete restrict;
 
-alter table PATIENT_PHOTO
-   add constraint FK_PATIENT__REFERENCE_PATIENT foreign key (PatientId)
-      references PATIENT (PatientId)
+alter table ADMINISTRATIVE.PATIENT_PHOTO
+   add constraint FK_Patient_Photos foreign key (PatientId)
+      references ADMINISTRATIVE.PATIENT (PatientId)
       on update restrict
       on delete restrict;
 
-alter table PATIENT_RACE
-   add constraint FK_PATIENT__REFERENCE_PATIENT foreign key (PatientId)
-      references PATIENT (PatientId)
+alter table ADMINISTRATIVE.PATIENT_RACE
+   add constraint FK_Patient_Races foreign key (PatientId)
+      references ADMINISTRATIVE.PATIENT (PatientId)
       on update restrict
       on delete restrict;
 
-alter table PATIENT_TELECOM
-   add constraint FK_PATIENT__REFERENCE_PATIENT foreign key (PatientId)
-      references PATIENT (PatientId)
+alter table ADMINISTRATIVE.PATIENT_TELECOM
+   add constraint FK_Patient_Telecoms foreign key (PatientId)
+      references ADMINISTRATIVE.PATIENT (PatientId)
       on update restrict
       on delete restrict;
 
