@@ -192,6 +192,18 @@
     <Compile Include="Migrations\201503192210164_DAF.Designer.cs">
       <DependentUpon>201503192210164_DAF.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503262205237_Period.cs" />
+    <Compile Include="Migrations\201503262205237_Period.Designer.cs">
+      <DependentUpon>201503262205237_Period.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503262207026_Period1.cs" />
+    <Compile Include="Migrations\201503262207026_Period1.Designer.cs">
+      <DependentUpon>201503262207026_Period1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503262207565_dt.cs" />
+    <Compile Include="Migrations\201503262207565_dt.Designer.cs">
+      <DependentUpon>201503262207565_dt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\FhirDbContext.cs" />
     <Compile Include="Models\FhirFoxDbContext.cs" />
@@ -290,6 +302,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201503192210164_DAF.resx">
       <DependentUpon>201503192210164_DAF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503262205237_Period.resx">
+      <DependentUpon>201503262205237_Period.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503262207026_Period1.resx">
+      <DependentUpon>201503262207026_Period1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503262207565_dt.resx">
+      <DependentUpon>201503262207565_dt.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

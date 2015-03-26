@@ -43,9 +43,9 @@ namespace FhirFox.Models
 
         public string NameSuffix { get; set; }
 
-        public string NamePeriodStart { get; set; }
+        public DateTime? NamePeriodStart { get; set; }
 
-        public string NamePeriodEnd { get; set; }
+        public DateTime? NamePeriodEnd { get; set; }
 
         [StringLength(4)]
         public string AddressUse { get; set; }

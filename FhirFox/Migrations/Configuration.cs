@@ -9,7 +9,7 @@ namespace FhirFox.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(FhirFox.Models.FhirDbContext context)

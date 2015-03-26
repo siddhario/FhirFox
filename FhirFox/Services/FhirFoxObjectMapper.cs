@@ -81,7 +81,7 @@ namespace FhirFox.Services
                             }
                         }
 
-                   
+
 
                         #endregion
 
@@ -340,6 +340,173 @@ namespace FhirFox.Services
                             }
 
                             fhirPatient.Identifier.Add(idf);
+                        }
+
+                        #endregion
+
+                        #region Contact
+
+                        foreach (PATIENT_CONTACT patientContact in dbPatient.PATIENT_CONTACT)
+                        {
+                            Patient.ContactComponent cp = new Patient.ContactComponent();
+                            Period p = new Period();
+                            if (patientContact.PeriodStart.HasValue)
+                                p.Start = patientContact.PeriodStart.Value.ToString("yyyy-MM-dd");
+                            if (patientContact.PeriodEnd.HasValue)
+                                p.End = patientContact.PeriodEnd.Value.ToString("yyyy-MM-dd");
+                            cp.Period = p;
+
+                            HumanName hn = new HumanName();
+                            p = new Period();
+                            if (patientContact.NamePeriodStart.HasValue)
+                                p.Start = patientContact.NamePeriodStart.Value.ToString("yyyy-MM-dd");
+                            if (patientContact.NamePeriodEnd.HasValue)
+                                p.End = patientContact.NamePeriodEnd.Value.ToString("yyyy-MM-dd");
+                            hn.Period = p;
+
+                            if (patientContact.NameFamily != null)
+                            {
+                                string[] _family = Regex.Split(patientContact.NameFamily, Options.STRING_DELIMITER);
+                                hn.Family = _family.AsEnumerable();
+                            }
+                            if (patientContact.NameGiven != null)
+                            {
+                                string[] _given = Regex.Split(patientContact.NameGiven, Options.STRING_DELIMITER);
+                                hn.Given = _given.AsEnumerable();
+                            }
+                            if (patientContact.NamePrefix != null)
+                            {
+                                string[] _prefix = Regex.Split(patientContact.NamePrefix, Options.STRING_DELIMITER);
+                                hn.Prefix = _prefix.AsEnumerable();
+                            }
+                            if (patientContact.NameSuffix != null)
+                            {
+                                string[] _suffix = Regex.Split(patientContact.NameSuffix, Options.STRING_DELIMITER);
+                                hn.Suffix = _suffix.AsEnumerable();
+                            }
+                            hn.Text = patientContact.NameText;
+
+                            switch (patientContact.NameUse)
+                            {
+                                case "official":
+                                    {
+                                        hn.Use = HumanName.NameUse.Official;
+                                        break;
+                                    }
+
+                                case "anonymous":
+                                    {
+
+                                        hn.Use = HumanName.NameUse.Anonymous;
+                                        break;
+                                    }
+
+                                case "maiden":
+                                    {
+                                        hn.Use = HumanName.NameUse.Maiden;
+                                        break;
+                                    }
+
+                                case "nickname":
+                                    {
+                                        hn.Use = HumanName.NameUse.Nickname;
+                                        break;
+                                    }
+
+                                case "old":
+                                    {
+                                        hn.Use = HumanName.NameUse.Old;
+                                        break;
+                                    }
+
+                                case "temp":
+                                    {
+                                        hn.Use = HumanName.NameUse.Temp;
+                                        break;
+                                    }
+
+                                case "usual":
+                                    {
+                                        hn.Use = HumanName.NameUse.Usual;
+                                        break;
+                                    }
+                            }
+
+                            cp.Name = hn;
+
+                            if (patientContact.Gender != null)
+                            {
+                                switch (patientContact.Gender)
+                                {
+                                    case "male":
+                                        {
+                                            cp.Gender = AdministrativeGender.Male;
+                                            break;
+                                        }
+                                    case "female":
+                                        {
+                                            cp.Gender = AdministrativeGender.Female;
+                                            break;
+                                        }
+
+
+                                    case "other":
+                                        {
+                                            cp.Gender = AdministrativeGender.Other;
+                                            break;
+                                        }
+
+                                    case "unknown":
+                                        {
+                                            cp.Gender = AdministrativeGender.Unknown;
+                                            break;
+                                        }
+                                }
+                            }
+
+                            Address a = new Address();
+
+                            p = new Period();
+                            if (patientContact.AddressPeriodStart.HasValue)
+                                p.Start = patientContact.AddressPeriodStart.Value.ToString("yyyy-MM-dd");
+                            if (patientContact.AddressPeriodEnd.HasValue)
+                                p.End = patientContact.AddressPeriodEnd.Value.ToString("yyyy-MM-dd");
+                            a.Period = p;
+                            a.PostalCode = patientContact.AddressPostalCode;
+
+                            a.City = patientContact.AddressCity;
+                            a.Country = patientContact.AddressCountry;
+                            a.State = patientContact.AddressState;
+                            if (patientContact.AddressLine != null)
+                            {
+                                string[] _lines = Regex.Split(patientContact.AddressLine, Options.STRING_DELIMITER);
+                                a.Line = _lines.AsEnumerable();
+                            }
+
+                            switch (patientContact.AddressUse)
+                            {
+                                case "home":
+                                    {
+                                        a.Use = Address.AddressUse.Home;
+                                        break;
+                                    }
+                                case "old":
+                                    {
+                                        a.Use = Address.AddressUse.Old;
+                                        break;
+                                    }
+                                case "temp":
+                                    {
+                                        a.Use = Address.AddressUse.Temp;
+                                        break;
+                                    }
+                                case "work":
+                                    {
+                                        a.Use = Address.AddressUse.Work;
+                                        break;
+                                    }
+                            }
+                            cp.Address = a;
                         }
 
                         #endregion
