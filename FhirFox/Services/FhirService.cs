@@ -12,10 +12,10 @@ namespace FhirFox.Services
 {
     public class FhirService : IFhirService
     {
-        private FhirDbContext _dbContext;
+        private DbContext _dbContext;
         private IObjectMapper _mapper;
 
-        public FhirService(FhirDbContext dbContext, IObjectMapper mapper)
+        public FhirService(FhirFoxDbContext dbContext, IObjectMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
@@ -23,14 +23,14 @@ namespace FhirFox.Services
 
         public virtual async Task<Base> GetResourceById(string id, string type)
         {
-            var omgwtf = await _dbContext.Set(Type.GetType("FhirFox.Models.DB" + type)).FindAsync(id);
+            var omgwtf = await _dbContext.Set(Type.GetType("FhirFox.Models." + type.ToUpper())).FindAsync(id);
             Base fhirObject = _mapper.GetFhirObject(omgwtf);
             return fhirObject;
         }
 
         public virtual async Task DeleteResourceById(string id, string type)
         {
-            DbSet dbset = _dbContext.Set(Type.GetType("FhirFox.Models.DB" + type));
+            DbSet dbset = _dbContext.Set(Type.GetType("FhirFox.Models." + type.ToUpper()));
             var omgwtf = await dbset.FindAsync(id);
             dbset.Remove(omgwtf);
             await _dbContext.SaveChangesAsync();
@@ -40,7 +40,8 @@ namespace FhirFox.Services
         public virtual async Task<Base> GetAll(string type)
         {
             Bundle b = new Bundle();
-            List<object> list = await _dbContext.Set(Type.GetType("FhirFox.Models.DB" + type)).ToListAsync();
+       
+            List<object> list = await _dbContext.Set(Type.GetType("FhirFox.Models." + type.ToUpper())).ToListAsync();
             foreach (var p in list)
             {
                 Bundle.BundleEntryComponent be = new Bundle.BundleEntryComponent();
