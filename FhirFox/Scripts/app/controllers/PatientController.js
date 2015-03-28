@@ -1,33 +1,12 @@
-﻿// Code goes here
+﻿angular.module('patientApp').controller('PatientController', ['$scope', '$http', 'dataFactory', function ($scope, $http, dataFactory) {
 
-var myApp = angular.module('patientApp', ['angularUtils.directives.dirPagination']);
-
-function PatientController($scope, $http) {
-    var url = "../fhir/Patient/";
     $scope.mode = "READ";
 
     $scope.currentPage = 1;
     $scope.pageSize = 10;
     $scope.patients = [];
 
-    $scope.pageChangeHandler = function (num) {
-        console.log('meals page changed to ' + num);
-    };
-
-    // LOAD DATA FUNCTION
-    $scope.loadData = function () {
-        $http.defaults.headers.common['Accept'] = 'application/json+fhir';
-        $http.get(url).
-     success(function (data, status, headers, config) {
-         //IF OK BIND DATA TO VIEW MODEL
-         $scope.patients = data.entry;
-         $scope.mode = "READ";
-     }).
-     error(function (data, status, headers, config) {
-         //IF NOT SHOW ERROR
-         alert(data.text.div);
-     });
-    };
+  
 
     $scope.buildResource = function () {
         var data = {};
@@ -114,8 +93,7 @@ function PatientController($scope, $http) {
         $scope.clearScope();
     }
 
-    $scope.clearScope = function()
-    {
+    $scope.clearScope = function () {
         $scope.Id = null;
         $scope.Pin = null;
         $scope.FirstName = null;
@@ -219,14 +197,16 @@ function PatientController($scope, $http) {
         $scope.current = currentObject;
     }
 
-    $scope.loadData();
-}
+    function getPatients() {
+        dataFactory.getPatients()
+            .success(function (pats) {
+                $scope.patients = pats.entry;
+            })
+            .error(function (error) {
+                $scope.status = 'Unable to load patient data: ' + error.message;
+            });
+    }
 
-function OtherController($scope) {
-    $scope.pageChangeHandler = function (num) {
-        console.log('going to page ' + num);
-    };
-}
+    getPatients();
+}]);
 
-myApp.controller('PatientController', PatientController);
-myApp.controller('OtherController', OtherController);
