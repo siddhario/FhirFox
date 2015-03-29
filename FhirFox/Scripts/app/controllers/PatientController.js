@@ -1,4 +1,4 @@
-﻿angular.module('patientApp').controller('PatientController', ['$scope', 'dataFactory', function ($scope, dataFactory) {
+angular.module('patientApp').controller('PatientController', ['$scope', 'dataFactory', function ($scope, dataFactory) {
 
     function init() {
         $scope.resourceType = 'Patient';
@@ -7,6 +7,8 @@
     }
 
     init();  
+    
+    
 
     /* VIEW MODEL MAPPING*/
     $scope.select = function (object) {
@@ -151,11 +153,11 @@
 
     function loadData() {
         dataFactory.getResources($scope.resourceType)
-            .success(function (pats) {
-                $scope.patients = pats.entry;
+            .success(function (data, status, headers, config) {
+                $scope.patients = data.entry;
             })
             .error(function (error) {
-                $scope.status = 'Unable to load patient data: ' + error.message;
+               alert(data.text.div);
             });
     }
     /*DATA MANAGMENT*/

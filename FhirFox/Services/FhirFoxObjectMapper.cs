@@ -1,4 +1,4 @@
-﻿using FhirFox.Models;
+using FhirFox.Models;
 using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace FhirFox.Services
     public class FhirFoxObjectMapper : IObjectMapper
     {
         public object GetDbObject(Hl7.Fhir.Model.Base FhirModel)
-        {
+        {            
             throw new NotImplementedException();
         }
 
