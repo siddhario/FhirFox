@@ -50,7 +50,7 @@ namespace FhirFox.Controllers
         }
 
         [Route("{type}/{id}")]
-        public async Task Delete(string id, string type)
+        public async Task Delete(string type, string id)
         {
             await _fhirService.DeleteResourceById(id, type);
         }
